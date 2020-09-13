@@ -1,22 +1,36 @@
-pragma solidity ^0.6.0;
-
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
+pragma solidity ^0.7.0;
 
 contract Project{
-    using SafeMath for uint256;
 
-    enum{
+    //Project state enumeration
+    enum ProjectState{
         FundRaising, expired, successful
     }
 
+    //State variables 
     address payable public creator;
     uint256 public currentBalance;
     uint public amountGoal;
     uint public completeAt;
     uint public raiseBy;
-    string public title;
-    string public description;
-    State public state = State.Fundraising;
+    string public projectTitle;
+    string public projectDescription;
+    ProjectState public state = ProjectState.FundRaising;
     mapping (address => uint) public contributions;
+
+    //Constructor for the contract
+    constructor(
+        uint goal,
+        uint complete,
+        string memory title,
+        string memory description
+    ){
+        amountGoal = goal;
+        completeAt = complete;
+        projectTitle = title;
+        projectDescription = description;
+    }
+
+    
 }
 
