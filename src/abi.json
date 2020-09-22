@@ -43,6 +43,32 @@
 		"type": "event"
 	},
 	{
+		"inputs": [],
+		"name": "returnAllProjects",
+		"outputs": [
+			{
+				"internalType": "contract Project[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "sampleGreeting",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "text1",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "string",
@@ -68,19 +94,6 @@
 		"name": "startProject",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "returnAllProjects",
-		"outputs": [
-			{
-				"internalType": "contract Project[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	}
 ]

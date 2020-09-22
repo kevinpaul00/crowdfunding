@@ -7,9 +7,10 @@ web3 = Web3(Web3.HTTPProvider(ganacheURL))
 with open("src/abi.json") as f:
     abi = json.load(f)
 
-address = "0xbD8A3564c77A65B5F20dDb4032b72B60b12BFa03"
-address = web3.toCheckSumAddress(address)
+address = "0x2Be7CA74148184EaD125e28D2246908042631304"
+address = web3.toChecksumAddress(address)
 
 contract = web3.eth.contract(address = address, abi = abi)
 
-print(contract.functions.returnAllProjects().call())
+print(contract.functions.sampleGreeting().call())
+
