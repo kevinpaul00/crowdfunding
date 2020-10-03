@@ -1,6 +1,6 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.5.16;
 
-import './Project.sol';
+import "./Project.sol";
 
 contract Funding{
     Project[] private projects;
@@ -12,6 +12,9 @@ contract Funding{
         uint256 deadline,
         uint256 goalAmount
     );
+
+
+    constructor()public{}
     
     function startProject(
         string calldata title,
