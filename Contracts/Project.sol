@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.5.16;
 
 contract Project{
 
@@ -26,7 +26,7 @@ contract Project{
         uint deadline,
         string memory title,
         string memory description
-    ){
+    )public{
         projectOwner = projectStarter;
         amountGoal = goal;
         //completeAt = complete;

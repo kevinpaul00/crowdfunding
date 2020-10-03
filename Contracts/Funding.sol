@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.5.16;
 
 import "./Project.sol";
 
@@ -14,7 +14,7 @@ contract Funding{
     );
 
 
-    constructor(){}
+    constructor()public{}
     
     function startProject(
         string calldata title,
