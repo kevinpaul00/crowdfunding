@@ -19,10 +19,14 @@ class ProjectForm extends Component {
         this.setState({
           [event.target.name]: event.target.value
         });
+        console.log(this.state);
     }
 
-    async handleSubmit(event){
-        await this.props.contract.methods.startProject(this.state.projectTitle, this.state.description, this.state.durationInDays,this.state.amountToRaise);
+    handleSubmit(event){
+        console.log("Test");
+        console.log(this.props.accounts[0]);
+        //console.log(this.props.contract.methods.display().call({ from: this.props.accounts[0] }));
+        this.props.contract.methods.startProject(this.state.projectTitle, this.state.description, this.state.durationInDays,this.state.amountToRaise).send({from: this.props.accounts[0]});
         event.preventDefault();
     }
 

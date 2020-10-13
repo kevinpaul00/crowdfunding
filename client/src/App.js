@@ -19,7 +19,8 @@ class App extends Component {
       const networkId = await web3.eth.net.getId();
 
       const deployedNetwork = FundingContract.networks[networkId];
-      console.log(deployedNetwork);
+      //console.log(deployedNetwork);
+      //console.log(deployedNetwork.address)
       const instance = new web3.eth.Contract(
         FundingContract.abi,
         deployedNetwork && deployedNetwork.address,
@@ -56,7 +57,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <ProjectFrom contract={this.state.contract}/>
+        <ProjectFrom contract={this.state.contract} accounts={this.state.accounts} web3={this.state.web3}/>
         <div>The stored value is: {this.state.storageValue}</div>
       </div>
     );

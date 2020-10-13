@@ -40,4 +40,8 @@ contract Funding{
     function returnAllProjects() external view returns(Project[] memory){
         return projects;
     }
+
+    function display() external returns(string memory){
+        return "Hello Solidity";
+    }
 }
