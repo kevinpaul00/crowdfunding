@@ -12,13 +12,14 @@ class App extends Component {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
+
       const deployedNetwork = FundingContract.networks[networkId];
+      console.log(deployedNetwork);
       const instance = new web3.eth.Contract(
         FundingContract.abi,
         deployedNetwork && deployedNetwork.address,
@@ -35,7 +36,7 @@ class App extends Component {
       console.error(error);
     }
   };
-
+  //cd client && npm run start
   runExample = async () => {
     const { accounts, contract } = this.state;
 
@@ -55,7 +56,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <ProjectFrom/>
+        <ProjectFrom contract={this.state.contract}/>
         <div>The stored value is: {this.state.storageValue}</div>
       </div>
     );

@@ -1,4 +1,4 @@
-var Funding = artifacts.require("../contracts/Funding.sol");
+var Funding = artifacts.require("../contracts/SimpleStorage.sol");
 
 module.exports = function(deployer) {
   deployer.deploy(Funding);
