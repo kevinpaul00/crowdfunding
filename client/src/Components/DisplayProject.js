@@ -23,7 +23,7 @@ class DisplayProject extends Component {
                 projectInfo.isLoading = false;
                 projectInfo.contract = projectInst;
                 this.projectData.push(projectInfo);
-              });              
+              });
             });
           });
     }
