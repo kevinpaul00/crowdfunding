@@ -52,7 +52,6 @@ class DisplayProject extends Component {
             });
 
             setTimeout(() => {
-                
                 this.setState({
                     projects: p,
                     isLoading: false
