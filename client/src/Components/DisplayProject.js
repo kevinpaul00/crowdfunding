@@ -1,37 +1,94 @@
 import React, { Component } from "react";
-import { Container, Row } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import ProjectContract from "../contracts/Project.json";
 
 class DisplayProject extends Component {
     constructor(props){
         super(props);
         this.state = {
-            projects: null
+            project: null,
+            directProject: [],
+            //projects: [],
+            isLoading: true
         }
-    }    
-
+    }  
+    
     getProject(address){
-        const instance = new web3.eth.Contract(ProjectContract.abi, address);
+        const instance = new this.props.web3.eth.Contract(ProjectContract.abi, address);
         return instance;
     }
     componentDidMount(){
-        contract.methods.returnAllProjects().call().then((projects) => {
-            projects.forEach((projectAddress) => {
-              const projectInst = getProject(projectAddress);
-              projectInst.methods.getDetails().call().then((projectData) => {
+        let p = [];
+        //let directProject = []
+        this.props.contract.methods.returnAllProjects().call().then((projectsX) => {
+            
+            projectsX.forEach((projectAddress) => {
+                let x = {name: '', desc: ''};
+                const projectInst = this.getProject(projectAddress);
+                projectInst.methods.getProjectDetails().call().then((projectData) => {
+                
                 const projectInfo = projectData;
-                projectInfo.isLoading = false;
+                //Kevin code
+                this.state.directProject.push(projectData)
+
+                // projects.push(projectData);
+                // console.log(projectInfo)
+                // projectInfo.isLoading = false;
+                // this.projects.push(projectInfo);
+
+                //Apoorva Code
                 projectInfo.contract = projectInst;
-                this.projectData.push(projectInfo);
+                x.name = projectInfo.title;
+                x.desc = projectInfo.description;
+                p.push(x);
+                
               });
             });
-          });
+
+            this.setState({
+               
+                //directProject : p,
+                projects: p,
+            });
+            
+            setTimeout(() => {
+                
+                this.setState({
+                        
+                    
+                    isLoading: false
+                });
+            }, 2000);
+            
+            
+        });
     }
      render() {
+        console.log((this.state.projects));
+        //const k = this.state.projects;
+        //console.log(k);
+
+        const displayProjects = this.state.isLoading === false    ? (
+           this.state.projects!==null?(this.state.projects.map((k) => {
+                    
+					return(
+                        <Container className="hover-decoration">
+                                <Row className="align-items-center">
+                                    <Col>
+                                        <p>Hello</p>
+                                        <p>{k.desc}</p>
+                                    </Col>
+                                </Row>
+                                <hr/>
+                        </Container>
+                    );
+				}
+        )):console.log(this.state.projects.length) ): (<div>Projects Loading...</div>)
+        
         return (
         <Container className="form-setup link-setup">
             <Row>
-                
+                {displayProjects}
             </Row>
         </Container>
         );

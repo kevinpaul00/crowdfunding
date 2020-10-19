@@ -3,6 +3,7 @@ import FundingContract from "./contracts/Funding.json";
 
 import getWeb3 from "./getWeb3";
 import ProjectFrom from "./Components/ProjectForm";
+import DisplayProject from "./Components/DisplayProject";
 
 import "./App.css";
 
@@ -60,7 +61,6 @@ class App extends Component {
       <div className="App">
         <ProjectFrom contract={this.state.contract} accounts={this.state.accounts} web3={this.state.web3}/>
         <DisplayProject contract={this.state.contract} web3={this.state.web3}/>
-        <div>The stored value is: {this.state.storageValue}</div>
       </div>
     );
   }
