@@ -40,22 +40,21 @@ class DisplayProject extends Component {
                 projectInfo.contract = projectInst;
                 x.name = projectInfo.title;
                 x.desc = projectInfo.description;
-                p.push(x);
+                p.push(projectData);
                 
               });
             });
 
             this.setState({
                
-                //directProject : p,
+                //directProject,
                 projects: p,
             });
-            
+
             setTimeout(() => {
                 
                 this.setState({
-                        
-                    
+                    projects: p,
                     isLoading: false
                 });
             }, 2000);
@@ -75,8 +74,10 @@ class DisplayProject extends Component {
                         <Container className="hover-decoration">
                                 <Row className="align-items-center">
                                     <Col>
-                                        <p>Hello</p>
-                                        <p>{k.desc}</p>
+                                        <p>{k.title}</p>
+                                    </Col>
+                                    <Col>
+                                        <p>{k.description}</p>
                                     </Col>
                                 </Row>
                                 <hr/>
