@@ -1,54 +1,63 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
 import ProjectContract from "../contracts/Project.json";
+import Modal from 'react-modal';
 
 class DisplayProject extends Component {
     constructor(props){
         super(props);
         this.state = {
-            project: null,
-            directProject: [],
-            //projects: [],
-            isLoading: true
+            isLoading: true,
+            isOpen: false
         }
-    }  
-    
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+    } 
+
+    handleChange(event) {
+        this.setState({
+          [event.target.name]: event.target.value
+        });
+        //console.log(this.state);
+    }
+
+    openModal() {
+        this.setState({
+            isOpen: true
+        });
+      }
+     
+    closeModal(){
+        this.setState({
+            isOpen: false
+        });
+    }
+
     getProject(address){
         const instance = new this.props.web3.eth.Contract(ProjectContract.abi, address);
         return instance;
     }
-    componentDidMount(){
+
+    storeProjects(){
         let p = [];
-        //let directProject = []
         this.props.contract.methods.returnAllProjects().call().then((projectsX) => {
             
             projectsX.forEach((projectAddress) => {
-                let x = {name: '', desc: ''};
+                let x = {title: '', description: '', amtGoal: 0, deadline: 0, currState: null};
                 const projectInst = this.getProject(projectAddress);
                 projectInst.methods.getProjectDetails().call().then((projectData) => {
                 
                 const projectInfo = projectData;
-                //Kevin code
-                this.state.directProject.push(projectData)
-
-                // projects.push(projectData);
-                // console.log(projectInfo)
-                // projectInfo.isLoading = false;
-                // this.projects.push(projectInfo);
 
                 //Apoorva Code
                 projectInfo.contract = projectInst;
-                x.name = projectInfo.title;
-                x.desc = projectInfo.description;
+                x.title = projectInfo.title;
+                x.description = projectInfo.description;
+                x.amtGoal = projectInfo.amtGoal;
+                x.deadline = projectInfo.deadline;
+                x.currState = projectInfo.currState;
                 p.push(projectData);
-                
               });
-            });
-
-            this.setState({
-               
-                //directProject,
-                projects: p,
             });
 
             setTimeout(() => {
@@ -56,16 +65,18 @@ class DisplayProject extends Component {
                     projects: p,
                     isLoading: false
                 });
-            }, 2000);
-            
+            }, 100);
             
         });
     }
+    componentDidMount(){
+        this.storeProjects();
+    }
+    componentDidUpdate(){
+        this.storeProjects();
+    }
      render() {
         console.log((this.state.projects));
-        //const k = this.state.projects;
-        //console.log(k);
-
         const displayProjects = this.state.isLoading === false    ? (
            this.state.projects!==null?(this.state.projects.map((k) => {
                     
@@ -77,6 +88,13 @@ class DisplayProject extends Component {
                                     </Col>
                                     <Col>
                                         <p>{k.description}</p>
+                                    <button onClick={this.openModal}>Fund</button>
+                                    <Modal
+                                        isOpen={this.state.isOpen}
+                                        onRequestClose={this.closeModal}>
+                                            <p>Hello</p>
+                                            
+                                        </Modal>
                                     </Col>
                                 </Row>
                                 <hr/>
