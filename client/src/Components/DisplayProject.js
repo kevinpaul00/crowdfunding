@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
 import ProjectContract from "../contracts/Project.json";
 import Modal from 'react-modal';
+import FundingForm from './FundingForm';
 
 class DisplayProject extends Component {
     constructor(props){
@@ -26,7 +27,7 @@ class DisplayProject extends Component {
             isOpen: true
         });
     }
-     
+
     closeModal(){
         this.setState({
             isOpen: false
@@ -49,13 +50,14 @@ class DisplayProject extends Component {
                 
                 const projectInfo = projectData;
 
+                //console.log(projectInfo);
                 //Apoorva Code
-                projectInfo.contract = projectInst;
-                x.title = projectInfo.title;
-                x.description = projectInfo.description;
-                x.amtGoal = projectInfo.amtGoal;
-                x.deadline = projectInfo.deadline;
-                x.currState = projectInfo.currState;
+                // projectInfo.contract = projectInst;
+                // x.title = projectInfo.title;
+                // x.description = projectInfo.description;
+                // x.amtGoal = projectInfo.amtGoal;
+                // x.deadline = projectInfo.deadline;
+                // x.currState = projectInfo.currState;
                 p.push(projectData);
               });
             });
@@ -76,25 +78,30 @@ class DisplayProject extends Component {
         this.storeProjects();
     }
      render() {
-        console.log((this.state.projects));
+        //console.log((this.state.projects));
         const displayProjects = this.state.isLoading === false    ? (
            this.state.projects!==null?(this.state.projects.map((k) => {
-                    
+                    var t;
 					return(
                         <Container className="hover-decoration">
                                 <Row className="align-items-center">
                                     <Col>
                                         <p>{k.title}</p>
+                                        <p>Description: {k.description}</p>
+                                        <p>Current State: {k.currState}</p>
+                                        <p>Current Balance: {k.currBalance}</p>
+                                        <p>Deadline: 
+                                            {/* {this.state.date.toISOString().match(/T(\d{2}:\d{2}:\d{2})/)[1]} */}
+                                            {new Date(k.deadline* 1000).toISOString().match(/(\d{4}\-\d{2}\-\d{2})T(\d{2}:\d{2}:\d{2})/)[1]}
+                                        </p> 
                                     </Col>
                                     <Col>
-                                        <p>{k.description}</p>
-                                    <button onClick={this.openModal}>Fund</button>
-                                    <Modal
-                                        isOpen={this.state.isOpen}
-                                        onRequestClose={this.closeModal}>
-                                            <p>Hello</p>
-                                            
-                                        </Modal>
+                                        <button onClick={this.openModal}>Fund</button>
+                                        <Modal
+                                            t = {k}
+                                            isOpen={this.state.isOpen}
+                                            onRequestClose={this.closeModal}>
+                                         </Modal>
                                     </Col>
                                 </Row>
                                 <hr/>

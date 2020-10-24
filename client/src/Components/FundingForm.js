@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
-
 class FundingForm extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            fundingAmount: 0
+            fundingAmount: 0,
+            date: new Date(this.props.instance.deadline * 1000),
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -30,11 +30,17 @@ class FundingForm extends Component {
         <Container className="form-setup link-setup">
             <Row>
                 <Col xs="12" md="6">
+                    <b><p>{this.props.instance.title}</p></b>
+                    <p>Description: {this.props.instance.description}</p>
+                    <p>Current State: {this.props.instance.currState}</p>
+                    <p>Current Balance: {this.props.instance.currBalance}</p>
+                    <p>Deadline: 
+                        {/* {this.state.date.toISOString().match(/T(\d{2}:\d{2}:\d{2})/)[1]} */}
+                        {this.state.date.toISOString().match(/(\d{4}\-\d{2}\-\d{2})T(\d{2}:\d{2}:\d{2})/)[1]}
+                    </p> 
                     <form onSubmit={this.handleSubmit}>
-                        <h3><center>New Project</center></h3>
-
                         <div className="form-group">
-                            <label>Project Title</label>
+                            <label>Fund</label>
                             <input type="text" name="projectTitle" value={this.state.fundingAmount} onChange={this.handleChange}
                             className="form-control" placeholder="Title" />
                         </div>
