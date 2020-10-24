@@ -25,7 +25,7 @@ class DisplayProject extends Component {
         this.setState({
             isOpen: true
         });
-      }
+    }
      
     closeModal(){
         this.setState({
