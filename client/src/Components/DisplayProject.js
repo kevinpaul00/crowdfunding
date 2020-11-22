@@ -23,13 +23,13 @@ class DisplayProject extends Component {
         //console.log(this.state);
     }
 
-    fundCaller(projectAddr){
-        return event =>{
-            event.preventDefault();
-            console.log(projectAddr);
-            this.getProject(projectAddr).methods.contribute().send({from: this.props.accounts[0]});
-        }
-    }
+    // fundCaller(projectAddr){
+    //     return event =>{
+    //         event.preventDefault();
+    //         console.log(projectAddr);
+    //         this.getProject(projectAddr).methods.contribute().send({from: this.props.accounts[0]});
+    //     }
+    // }
 
     // fundCaller(event, k){
     //     console.log(this.getProject(k));
@@ -119,17 +119,13 @@ class DisplayProject extends Component {
                                         </p> 
                                     </Col>
                                     <Col>
-                                        <form onSubmit = {this.fundCaller(k.projectAddress)}>
+                                    <FundingForm contract={this.props.contract} accounts={this.props.accounts} web3={this.props.web3}
+                                                fundProjectAddress = {k.projectAddress}/>
+
+                                        {/* <form onSubmit = {this.fundCaller(k.projectAddress)}>
 
                                             <button type = "submit"> Fund </button>
-                                        </form>
-                                        {/* <button onClick={this.openModal}>Fund</button>
-                                        <Modal
-                                            t = {k}
-                                            isOpen={this.state.isOpen}
-                                            onRequestClose={this.closeModal}>
-                                                <FundingForm contract={this.state.contract} web3={this.state.web3}/>
-                                        </Modal> */}
+                                        </form> */}
                                     </Col>
                                 </Row>
                                 <hr/>
