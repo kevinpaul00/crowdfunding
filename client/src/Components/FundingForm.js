@@ -21,8 +21,9 @@ class FundingForm extends Component {
 
     handleSubmit(event){
         //console.log(this.props.contract.methods.display().call({ from: this.props.accounts[0] }));
-        this.props.contract.methods.contribute().send({from: this.props.accounts[0]});
-        event.preventDefault();
+        console.log("Test");
+        //this.props.contract.methods.contribute().send({from: this.props.accounts[0]});
+        //event.preventDefault();
     }
 
      render() {
@@ -40,7 +41,7 @@ class FundingForm extends Component {
                     </p> 
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
-                            <label>Fund</label>
+                            {/* <label>Fund</label> */}
                             <input type="text" name="projectTitle" value={this.state.fundingAmount} onChange={this.handleChange}
                             className="form-control" placeholder="Title" />
                         </div>

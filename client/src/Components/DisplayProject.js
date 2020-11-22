@@ -11,6 +11,7 @@ class DisplayProject extends Component {
             isLoading: true,
             isOpen: false
         }
+        
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
     } 
@@ -21,6 +22,20 @@ class DisplayProject extends Component {
         });
         //console.log(this.state);
     }
+
+    fundCaller(projectAddr){
+        return event =>{
+            event.preventDefault();
+            console.log(projectAddr);
+            this.getProject(projectAddr).methods.contribute().send({from: this.props.accounts[0]});
+        }
+    }
+
+    // fundCaller(event, k){
+    //     console.log(this.getProject(k));
+    //     //this.getProject(k).methods.contribute().send({from: this.props.accounts[0]});
+    //     event.preventDefault();
+    // }
 
     openModal() {
         this.setState({
@@ -43,13 +58,21 @@ class DisplayProject extends Component {
         let p = [];
         this.props.contract.methods.returnAllProjects().call().then((projectsX) => {
             
+            projectsX.forEach((projectAddress) =>{
+                setTimeout(()=>{
+                    const projectInst = this.getProject(projectAddress);
+                    projectInst.methods.checkFundingState().call();
+                })
+            })
+
             projectsX.forEach((projectAddress) => {
                 let x = {title: '', description: '', amtGoal: 0, deadline: 0, currState: null};
                 const projectInst = this.getProject(projectAddress);
+                // projectInst.methods.checkFundingState().call()
                 projectInst.methods.getProjectDetails().call().then((projectData) => {
                 
                 const projectInfo = projectData;
-
+                projectData.projectAddress = projectAddress;
                 //console.log(projectInfo);
                 //Apoorva Code
                 // projectInfo.contract = projectInst;
@@ -96,12 +119,17 @@ class DisplayProject extends Component {
                                         </p> 
                                     </Col>
                                     <Col>
-                                        <button onClick={this.openModal}>Fund</button>
+                                        <form onSubmit = {this.fundCaller(k.projectAddress)}>
+
+                                            <button type = "submit"> Fund </button>
+                                        </form>
+                                        {/* <button onClick={this.openModal}>Fund</button>
                                         <Modal
                                             t = {k}
                                             isOpen={this.state.isOpen}
                                             onRequestClose={this.closeModal}>
-                                         </Modal>
+                                                <FundingForm contract={this.state.contract} web3={this.state.web3}/>
+                                        </Modal> */}
                                     </Col>
                                 </Row>
                                 <hr/>
