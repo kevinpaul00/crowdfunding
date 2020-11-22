@@ -34,8 +34,9 @@ class ProjectForm extends Component {
         return (
         <Container className="form-setup link-setup">
             <Row>
-                <Col xs="12" md="6">
-                    <form onSubmit={this.handleSubmit}>
+                <Col max-width = "400px" margin = "auto" padding  ="100px">
+                {/* <Col xs="12" md="6"> */}
+                    <form onSubmit={this.handleSubmit} max-width = "400px" margin = "auto" padding  ="100px">
                         <h3><center>New Project</center></h3>
 
                         <div className="form-group">
