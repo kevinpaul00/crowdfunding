@@ -92,7 +92,7 @@ contract Project{
         }
     }
 
-    function getProjectDetails() public view returns(
+    function getProjectDetails() public returns(
         address projOwner,
         string memory title,
         string memory description,
@@ -101,6 +101,7 @@ contract Project{
         uint deadline,
         ProjectState currState
     ){
+        checkFundingState();
         projOwner = projectOwner;
         title = projectTitle;
         description = projectDescription;

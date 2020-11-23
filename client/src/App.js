@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import FundingContract from "./contracts/Funding.json";
+
 import getWeb3 from "./getWeb3";
 import ProjectFrom from "./Components/ProjectForm";
+import DisplayProject from "./Components/DisplayProject";
 
 import "./App.css";
 
@@ -12,13 +14,17 @@ class App extends Component {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
+
       const deployedNetwork = FundingContract.networks[networkId];
+
+      console.log(deployedNetwork);
+      console.log(deployedNetwork.address);
+      
       const instance = new web3.eth.Contract(
         FundingContract.abi,
         deployedNetwork && deployedNetwork.address,
@@ -35,7 +41,7 @@ class App extends Component {
       console.error(error);
     }
   };
-
+  //cd client && npm run start
   runExample = async () => {
     const { accounts, contract } = this.state;
 
@@ -55,8 +61,8 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <ProjectFrom/>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <ProjectFrom contract={this.state.contract} accounts={this.state.accounts} web3={this.state.web3}/>
+        <DisplayProject contract={this.state.contract} accounts={this.state.accounts} web3={this.state.web3}/>
       </div>
     );
   }
